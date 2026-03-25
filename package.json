@@ -10,7 +10,8 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "test": "node tests/test.js",
-    "start": "node dist/cli.js"
+    "start": "node dist/cli.js",
+    "publish-devto": "tsc && node dist/devto-publisher.js"
   },
   "keywords": [
     "openapi",

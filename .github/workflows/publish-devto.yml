@@ -1,0 +1,57 @@
+name: Publish to Dev.to
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'DEVTO_ARTICLE.md'
+      - 'devto.config.json'
+  workflow_dispatch:
+    inputs:
+      file:
+        description: 'Article file path'
+        required: true
+        default: './DEVTO_ARTICLE.md'
+      tags:
+        description: 'Tags (comma-separated)'
+        required: true
+        default: 'typescript,openapi,devtools'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build TypeScript
+        run: npm run build
+
+      - name: Publish to Dev.to
+        env:
+          DEVTO_API_KEY: ${{ secrets.DEVTO_API_KEY }}
+        run: |
+          FILE="${{ github.event.inputs.file || './DEVTO_ARTICLE.md' }}"
+          TAGS="${{ github.event.inputs.tags || 'typescript,openapi,devtools' }}"
+          npm run publish-devto -- --file="$FILE" --tags="$TAGS"
+
+      - name: Create commit comment
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ Article published to Dev.to!'
+            })
