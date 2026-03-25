@@ -57,3 +57,4 @@ export function generateAllTypes(schemas: Record<string, any>): string {
 }
   // Nested type support
   // Strict mode support
+  // Deprecation support
