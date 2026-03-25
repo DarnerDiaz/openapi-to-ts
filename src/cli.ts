@@ -40,3 +40,4 @@ function main() {
 }
 
 main();
+  // Better error handling
