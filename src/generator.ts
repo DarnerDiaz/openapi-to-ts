@@ -30,6 +30,21 @@ export function generateTypeScript(schemaName: string, schema: any): string {
 }
 
 function mapOpenAPITypeToTS(schema: any): string {
+  // Handle composition types (allOf, anyOf, oneOf)
+  if (schema.allOf) {
+    const types = schema.allOf.map(s => mapOpenAPITypeToTS(s)).join(' & ');
+    return `(${types})`;
+  }
+  if (schema.anyOf) {
+    const types = schema.anyOf.map(s => mapOpenAPITypeToTS(s)).join(' | ');
+    return `(${types})`;
+  }
+  if (schema.oneOf) {
+    const types = schema.oneOf.map(s => mapOpenAPITypeToTS(s)).join(' | ');
+    return `(${types})`;
+  }
+  
+  // Handle basic types
   if (schema.type === 'string') {
     if (schema.enum) {
       return schema.enum.map((v: string) => `"${v}"`).join(' | ');
@@ -55,6 +70,24 @@ export function generateAllTypes(schemas: Record<string, any>): string {
   
   return types;
 }
-  // Nested type support
-  // Strict mode support
-  // Deprecation support
+
+export function handleCompositionTypes(schema: any): string {
+  if (schema.allOf) {
+    const types = schema.allOf.map(s => mapOpenAPITypeToTS(s)).join(' & ');
+    return types;
+  }
+  if (schema.anyOf) {
+    const types = schema.anyOf.map(s => mapOpenAPITypeToTS(s)).join(' | ');
+    return types;
+  }
+  if (schema.oneOf) {
+    const types = schema.oneOf.map(s => mapOpenAPITypeToTS(s)).join(' | ');
+    return types;
+  }
+  return 'any';
+}
+
+export function handleNullableTypes(schema: any): string {
+  const baseType = mapOpenAPITypeToTS(schema);
+  return schema.nullable ? `${baseType} | null` : baseType;
+}
