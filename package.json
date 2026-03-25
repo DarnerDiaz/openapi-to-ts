@@ -1,0 +1,31 @@
+{
+  "name": "openapi-to-ts",
+  "version": "1.0.0",
+  "description": "Transform OpenAPI 3.0 specifications into TypeScript interfaces automatically",
+  "main": "dist/cli.js",
+  "bin": {
+    "openapi-to-ts": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "node tests/test.js",
+    "start": "node dist/cli.js"
+  },
+  "keywords": [
+    "openapi",
+    "swagger",
+    "typescript",
+    "interfaces",
+    "types",
+    "code-generation"
+  ],
+  "author": "Darner Diaz",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}
