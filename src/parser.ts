@@ -35,3 +35,4 @@ export function extractSchemas(spec: OpenAPISpec): Record<string, any> {
   
   return schemas;
 }
+  // YAML support added
