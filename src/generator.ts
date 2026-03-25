@@ -56,3 +56,4 @@ export function generateAllTypes(schemas: Record<string, any>): string {
   return types;
 }
   // Nested type support
+  // Strict mode support
