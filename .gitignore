@@ -4,3 +4,13 @@ dist/
 *.log
 .env
 .env.local
+*.js
+*.js.map
+*.d.ts
+*.d.ts.map
+coverage/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
