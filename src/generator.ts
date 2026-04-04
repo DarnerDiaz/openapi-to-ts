@@ -1,14 +1,35 @@
+/**
+ * TypeScript type definition with name and properties
+ */
 export interface TypeDefinition {
   name: string;
   properties: Record<string, PropertyType>;
 }
 
+/**
+ * OpenAPI property type information
+ */
 export interface PropertyType {
   type: string;
   required?: boolean;
   description?: string;
 }
 
+/**
+ * Generates TypeScript interface from OpenAPI schema
+ * @param {string} schemaName - Name for the generated interface
+ * @param {any} schema - OpenAPI schema object with properties and required fields
+ * @returns {string} Generated TypeScript interface code
+ * @example
+ * ```typescript
+ * const schema = {
+ *   properties: { id: { type: 'number' }, name: { type: 'string' } },
+ *   required: ['id']
+ * };
+ * generateTypeScript('User', schema);
+ * // Returns: 'interface User {\n  id: number;\n  name?: string;\n}\n'
+ * ```
+ */
 export function generateTypeScript(schemaName: string, schema: any): string {
   const properties = schema.properties || {};
   const required = schema.required || [];
