@@ -1,6 +1,10 @@
 import * as fs from 'fs';
 import * as yaml from 'js-yaml';
 
+/**
+ * OpenAPI specification structure
+ * Contains metadata, paths, and component schemas
+ */
 export interface OpenAPISpec {
   openapi: string;
   info: {
@@ -13,6 +17,17 @@ export interface OpenAPISpec {
   };
 }
 
+/**
+ * Parses OpenAPI specification from JSON or YAML file
+ * @param {string} filePath - Path to OpenAPI spec file (.json, .yaml, .yml)
+ * @returns {OpenAPISpec} Parsed OpenAPI specification object
+ * @throws {Error} If file format is not JSON, YAML, or YML
+ * @example
+ * ```typescript
+ * const spec = parseOpenAPI('./petstore.yaml');
+ * console.log(spec.info.title); // 'Swagger Petstore'
+ * ```
+ */
 export function parseOpenAPI(filePath: string): OpenAPISpec {
   const content = fs.readFileSync(filePath, 'utf-8');
   
@@ -25,6 +40,16 @@ export function parseOpenAPI(filePath: string): OpenAPISpec {
   throw new Error('Unsupported file format. Use .json, .yaml, or .yml');
 }
 
+/**
+ * Extracts all schema definitions from OpenAPI specification
+ * @param {OpenAPISpec} spec - Parsed OpenAPI specification
+ * @returns {Record<string, any>} Map of schema names to schema definitions
+ * @example
+ * ```typescript
+ * const schemas = extractSchemas(spec);
+ * console.log(schemas['User']); // User schema definition
+ * ```
+ */
 export function extractSchemas(spec: OpenAPISpec): Record<string, any> {
   const schemas: Record<string, any> = {};
   
