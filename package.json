@@ -9,7 +9,10 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "test": "node tests/test.js",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
     "start": "node dist/cli.js",
     "publish-devto": "tsc && node dist/scripts/devto-publisher.js"
   },
@@ -24,7 +27,9 @@
   "author": "Darner Diaz",
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^5.0.0"
+    "@vitest/ui": "^4.1.2",
+    "typescript": "^5.0.0",
+    "vitest": "^4.1.2"
   },
   "dependencies": {
     "js-yaml": "^4.1.0"
